@@ -1,0 +1,26 @@
+public class UberPool {
+
+	
+	public static void main(String[] args) {
+		
+
+	}
+
+
+
+int uberPool(int[] A, int[] B, int[] C, int[] X, int[] Y) 
+     {
+		int d_dis= Math.abs(A[0] - B[0]) + Math.abs(A[1] - B[1]);
+		int c_dis = Math.abs(C[0] - A[0]) + Math.abs(C[1] - A[1]);
+		int x_dis = Math.abs(X[0] - C[0]) + Math.abs(X[1] - C[1])
+				+ Math.abs(X[0] - B[0]) + Math.abs(X[1] - B[1]);
+		int y_dis = Math.abs(Y[0] - C[0]) + Math.abs(Y[1] - C[1])
+				+ Math.abs(Y[0] - B[0]) + Math.abs(Y[1] - B[1]);
+
+		if (x_dis <= y_dis && x_dis > d_dis && y_dis > d_dis)
+			return 1;
+		else if (x_dis > y_dis && x_dis > d_dis && y_dis > d_dis)
+			return 2;
+		else
+			return -1;
+	}
