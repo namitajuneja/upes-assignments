@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+using namespace std;
+static inline unsigned long long mulmod(unsigned long long a,unsigned long long b,unsigned long long c){    
+    
+    unsigned long long x = 0,y=a;
+    unsigned long long t;
+    
+    while(b){
+        if(b & 1){
+            t = x+y;
+            x = (t>c) ? t-c : t;
+        }
+        t = y<<1;
+        y = (t>c) ? t-c : t;        
+        b >>=1;
+    }
+    return (x%c);    
+}
+unsigned  long long arr[2005],inp[2005];
+int main()
+{
+	int n;
+	scanf("%d",&n);	
+	while(n--)
+	{
+		unsigned  long long a,b,c,add,multiply;
+		add=0;multiply=1;
+		int m;
+		scanf("%d",&m);
+		for(int i=0;i<m;i++)
+				scanf("%ll_u",&arr[i]);
+		scanf("%ll_u%ll_u%ll_u",&a,&b,&c);
+		getchar();
+		string S;
+		getline(cin,S);
+		a %= c ;b %= c;
+		int ptr1=0,ptr2=m-1;
+		for(int i=0;i<m;i++)		//Maximum is 10^3 operation
+		{		if(S[i]=='R')
+					swap(ptr1,ptr2);
+				inp[i] = arr[ptr1];
+				inp[i] %= c;
+				ptr1=ptr1+((ptr1>ptr2)?-1:1);
+		}
+		
+		for(int i=0;i<m;i++)		//10^5  operation 
+		{		
+			if(S[i]=='A')
+			{
+						add=(add%c)+a;
+						add %=c;
+					
+			}
+			else if(S[i]=='M')
+			{
+		
+					multiply=mulmod(multiply,b,c);
+					add=mulmod(add,b,c);			
+			}	
+			inp[i]=mulmod(multiply,inp[i],c);
+			inp[i]=(inp[i]+add);
+			inp[i] %=c;	
+		}			
+		for(int i=0;i<m;i++)
+			{if(i)printf(" ");printf("%ll_u",inp[i]);}
+		printf("\n");
+	}
+	return 0;	
+}
