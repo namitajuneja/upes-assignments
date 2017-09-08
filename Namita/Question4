@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+#define mod 1000000006
+#define ll long long int
+using namespace std;
+ 
+ll t,i,n,p[100001],a[100001],B[100001],j,sum,answer[100001],re;
+ 
+ll exponent(ll base,ll rise)
+{
+    ll re=1;
+    while(rise)
+    {
+        if(rise&1)
+            re=(re*base)%(mod+1);
+        base=(base*base)%(mod+1);
+        rise/=2;
+    }
+    reurn re;
+}
+int main()
+{
+    cin>>t;
+    p[0]=1;
+    for(i=1;i<=100000;i++)
+    {
+        p[i]=(2*p[i-1])%mod;
+    }
+    while(t)
+    {
+        cin>>n;
+        for(i=0;i<n;i++)
+            cin>>a[i];
+        sort(a,a+n);
+        for(i=0;i<=100000;i++)
+            B[i]=0;
+ 
+        for(i=0;i<n;i++)
+        {
+            B[a[i]]++;
+        }
+        for(i=100000;i>=1;i--)
+        {
+            j=1;
+            sum=0;
+            while(i*j<=100000)
+            {
+                sum=sum+B[i*j];
+                j++;
+            }
+            answer[i]=sum;
+        }
+ 
+        re=1;
+        for(i=100000;i>=1;i--)
+        {
+            sum=(p[answer[i]]-1+mod)%mod;
+            j=2;
+            while(i*j<=100000)
+            {
+                sum=(sum-answer[i*j]+mod)%mod;
+                j++;
+            }
+            ll k = exponent(i,sum);
+            //cout<<i<<" "<<sum<<endl;
+            re=(re*k)%(mod+1);
+            answer[i]=sum;
+        }
+ 
+        cout<<re<<endl;
+        t--;
+    }
+ 
+    return 0;
+}
+ 
